@@ -3,6 +3,7 @@ const notes = require('./notes.js');
 
 const addNoteHandler = (request, h) => {
     const { title, tags, body } = request.payload;
+
     const id = nanoid(16);
     const createdAt = new Date().toISOString();
     const updatedAt = createdAt;
@@ -42,7 +43,7 @@ const getAllNotesHandler = () => ({
 const getNotesByIdHandler = (request, h) => {
     const { id } = request.params;
 
-    const note = notes.filter((n) => n.id === id)[0];
+    const note = notes.find((n) => n.id === id)
 
     if (note !== undefined) {
         return {

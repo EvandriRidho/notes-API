@@ -1,5 +1,5 @@
 const Hapi = require('@hapi/hapi');
-const routes = require('./routes.js');
+const routes = require('./routes');
 
 const init = async () => {
     const server = Hapi.server({
@@ -8,17 +8,22 @@ const init = async () => {
         routes: {
             cors: {
                 origin: ['*'],
+            },
+            payload: {
+                parse: true,
+                allow: ['application/json'],
             }
-        }
+        },
     });
-    server.route(routes)
+
+    server.route(routes);
 
     await server.start();
-    console.log(`Server running on ${server.info.uri}`);
+    console.log(`Server berjalan pada ${server.info.uri}`);
 };
 
 process.on('unhandledRejection', (err) => {
-    console.log('error: ', err);
+    console.log(err);
     process.exit(1);
 });
 
